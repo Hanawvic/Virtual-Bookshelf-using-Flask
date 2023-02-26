@@ -1,0 +1,31 @@
+{% extends "bootstrap/base.html" %}
+
+	{% block title %} Library {% endblock %}
+
+{% block content %}
+<h1>My Library</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+    {% if len(all_books) == 0 %}
+    <p>Library is empty.</p>
+    {% else %}
+    <ul>
+        {% for book in all_books %}
+        <li> <a href="{{ url_for('delete', book_id=book.id) }}">Delete</a>
+            {{ book.title }} - {{ book.author }} - {{ book.rating }}/10
+            <a href="{{ url_for('edit_rating', book_id=book.id) }}">Edit Rating</a>
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+<a href="{{ url_for('add') }}">Add New Book</a>
+{% endblock %}
